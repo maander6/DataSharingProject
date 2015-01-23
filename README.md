@@ -11,7 +11,9 @@ Software, 59(10), 2014).  Specifically, the data table that results at after the
 script is run has:
 
 *Each column having a single variable
+
 *Each row has a single observation
+
 *The table is a single observational unit
 
 The data that is being processed was collected from a group of 30 volunteers who
@@ -30,7 +32,7 @@ The following presents relevant information for running
 the script, and for reading the resulting text file back into an R programming
 environment for subsequent manipulation.
 
-#Initial considerations
+###Initial considerations
 
 The data is in a compressed file (getdata-projectfiles-UCI_HAR_dataset.zip).
 This file should be decompressed into a directory (./UCI HAR Dataset), and this
@@ -43,13 +45,13 @@ The data.table, the dplyr, and the tidyr packages must be installed on the
 system where the script will be run as the script loads these libraries as one
 of the first instructions of the script.  
 
-#Running the script
+###Running the script
 
 The script must be run from the directory where the data was extracted into, 
 and that is one director up in the tree from the test and train directories.
 The output textfile (Samsung_data_tidy.txt) will be written to this directory.
 
-#Reading the output text file back into the R environment
+###Reading the output text file back into the R environment
 
 The output text file (Samsung_data_tidy.txt) should be read back into the R
 working environment using the following command:
@@ -61,7 +63,9 @@ read.table("Samsung_data_tidy.txt", header=TRUE)
 This script was written with the help of the following references:
 
 *H. Wickham, "Tidy Data", J. Stat. Software, 59(10), 2014.
+
 *D. Hood, "David's Project FAQ", https://class.courera.org/getdata-010/
   forum/thread?thread_id=49
+  
 *http://stackoverflow.com/questions/8508482 for code examples for calculating
   the mean values across the entire data table by subject and by activity
