@@ -1,0 +1,136 @@
+Code Book for run_analysis.R 
+
+Introduction
+
+This code book is for the run_analysis.R script developed for the Data Sharing course project.  The goal of the project is to write a script that takes unstructured data and create a tidy data set.  According to the paper "Tidy Date" written by Hadley Wickham (J. Stat. Software, 59(10), 2014), "Tidy datasets provide a standaradized way to link the structure of a dataset (its physical layout) with its semantics (its meaning)."  To accomplish this, Wickham further says that "A dataset is a collection of values.... Values are organized in two ways.  Every value belongs to a variable and an observation."  To keep this standard, a data table that contains tidy data has three attributes (Wickham):
+
+1.  Each variable forms a column
+2.  Each observation forms a row
+3.  Each type of observational unit forms a table
+
+It is following these principles that the structure of the output file that results from running the run_analysis.R script is derived.
+
+Input files:
+
+The data was provided free of charge and as is by:
+
+Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
+
+
+To understand the operation of the script, we must first understand the structure of the input files.  The run_analysis script reads in 8 separate text files from the data source.  The input files and a brief description follow:
+
+- features.txt: List of all features.
+
+- activity_labels.txt: Establishes a numerical value to the activity name.
+
+- X_train.txt: Training set.
+
+- y_train.txt: Training labels.
+
+- X_test.txt: Test set.
+
+- y_test.txt: Test labels.
+
+- subject_test.txt: A list of the subjects (identified by a unique number)
+
+- subject_train.txt: A list of the subjectw (identified by a unique number)
+
+features:
+
+this is a table of 561 observation types and 2 variables. From the features_info.txt file included with the data.  The data is a collection of output from the accelerometer (tACC) and gyroscope (tGyro) features of a Samsung Galaxy II smart phone.  From this data, other variables are calculated from the linear acceleration and angular velocity.  The leading "t" indicates the data is collected in the time domain.  The leading "f" indicates that the data has been subjected to a Fast Fourier Transform, and mathematical operation that transforms data from the time domain to the frequency domain.
+
+tBodyAcc-XYZ 
+tGravityAcc-XYZ : 
+tBodyAccJerk-XYZ : 
+tBodyGyro-XYZ : 
+tBodyGyroJerk-XYZ :
+tBodyAccMag
+tGravityAccMag
+tBodyAccJerkMag
+tBodyGyroMag
+tBodyGyroJerkMag
+fBodyAcc-XYZ
+fBodyAccJerk-XYZ
+fBodyGyro-XYZ
+fBodyAccMag
+fBodyAccJerkMag
+fBodyGyroMag
+fBodyGyroJerkMag
+
+the data labeled "*BodyACC*" and "*BodyGyro*" is the raw data from the accelerometer and the gyroscope.  The other data is derived from these quantities.  For each of the above variables, the following quantities were determined and included in the input dataset
+
+mean(): Mean value
+std(): Standard deviation
+mad(): Median absolute deviation 
+max(): Largest value in array
+min(): Smallest value in array
+sma(): Signal magnitude area
+energy(): Energy measure. Sum of the squares divided by the number of values. 
+iqr(): Interquartile range 
+entropy(): Signal entropy
+arCoeff(): Autorregresion coefficients with Burg order equal to 4
+correlation(): correlation coefficient between two signals
+maxInds(): index of the frequency component with largest magnitude
+meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+skewness(): skewness of the frequency domain signal 
+kurtosis(): kurtosis of the frequency domain signal 
+bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+angle(): Angle between to vectors.
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+
+gravityMean
+tBodyAccMean
+tBodyAccJerkMean
+tBodyGyroMean
+tBodyGyroJerkMean
+
+values in this table are normalized 
+
+activity_label:
+
+This table associates an integer with each of the types of activities that the subjects conducted in during the measurements.  These are:
+
+1 WALKING
+2 WALKING_UPSTAIRS
+3 WALKING_DOWNSTAIRS
+4 SITTING
+5 STANDING
+6 LAYING
+
+X_train:
+
+This is a table of 7352 observations of 561 variables.  The 561 variables correspond to the 561 observation types in the features table, and the 7352 observations correspond to multiple measurements of the features conducted on 21 subjects performing the 6 activities.  Each row corresponds to a single activity perfomed by one subject.  This table has no column or row labels.  The subjects in the train group are unique from those of the train group and were adults ages 19-48 randomly selected.
+
+X_test:
+
+This is a table of 2947 observations of 561 variables.  The 561 variables correspond to the 561 observation types in teh features table, and teh 2947 observations correspons to multiple measurements of the features conducted on 9 subjects performing the 6 activities.  Each row corresponds to a single activity performed by one subject.  This table has no column or row labels.  The subjects in the test group are unique from those of the train group and were adults ages 19-48 randomly selected.
+
+y_train:
+ 
+This is a dataset of 7352 observations of 1 variable.  The 7352 observations correspond to the activity type (e.g. 1 == WALKING) that the subject was participating in when the observations in the rows of the X_train table were being collected.  Values in this table are limited to 1 - 6.
+
+y_test:
+
+This is a dataset of 2947 observations of 1 variable.  The 2947 observations correspond to the activity type (e.g. 1 == WALKING) that the subject was participating in when the observations in teh rows of the X_test table were bding collected.  Values in this table are limited to 1 - 6.
+
+subject_train:
+
+This is a dataset of 7352 observations of 1 variable.  The 7352 observations correspond to the subject who was participating in the activity that lead to the observations in the rows of the X_train table.
+
+subject_test:
+
+This is a dataset of 2947 observations of 1 variable.  The 2947 observations correspond to the suject who was participating in the activity that lead to the observations in the rows of the X_test table.
+
+Input Summary:
+
+Based on the size of the input files, the script is able to align the activity type and the unique subject with each of the 7352 and 2047 observations in the train and the test groups.  This accumulation of observations with unique variable results in a table with 563 columns (e.g. variables) and 10299 rows (e.g. observations) - a total of 5,798,377 elements of the table.
+
+Script operation summary:
+
+The run_analysis.R script reads the data into data tables.  The script first adds a header to the X_test and X_train data tables to provide a unique name to each variable.  The column names are from the features data table.  It then adds a column to the X_test and X_train data tables that corresponds to the activity labels (from y-test and y_train respectively) to identify the type of activity the subject was performing while a particular observation was made.  Similarly, another column (from subject_test and subject_train, respectively) is added that adds the subject labels to the X_test and X_train data table to identify the subject who performed the activity while the observation was being made. 
+
+The X_test and X_train data tables are then combined using the rbind() function to create a single data table (complete_data) of all the observations of all the variables.
+
+Only the data for variables that are "mean" and "std" (mean and standard deviations) were retained.
+
