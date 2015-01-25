@@ -156,17 +156,34 @@ col_name <- as.vector(colnames(complete_data_sub))
 ##
 for(i in 1:length(col_name)){col_name[i]<-gsub("[[:punct:]]","",col_name[i])}
 ##
+## Part 4. Appropriately label the data set with descriptive variable names
+##
+## This is accomplished by stripping out the punctuation from the 
+## activity labels.  The names follow the convention set in the data set
+## Acc refers to accelerometer data, and Gyro refers to data from the 
+## gyroscope.  The leading t refers to time-based variables, and the f to 
+## frequency based variables.  
+##
 ## use the setnames() function to rename the variable (column) names
 ## 
 setnames(complete_data_sub, old=colnames(complete_data_sub), new=col_name)
 ##
 ## 5. CREATE A SECOND, INDEPENDENT TIDY DATA SET WITH AVG OF EACH VARIABLE
+##    FOR EACH SUBJECT
 ##
 ## To tidy the data, we need to group the data by Subject and Activity
 ## This can be accomplished in a single step using the lapply function.
 ##
 complete_data_average <- complete_data_sub[,lapply(.SD, mean), by=list(Subject, Activity)]
+##
+## Eliminate the redundant ActivityNum variable as it represents the same 
+## thing as the Activity variable
+##
 complete_data_average <- select(complete_data_average, -ActivityNum)
+##
+## Arrange the data by subject.
+##
+complete_data_average <- arrange(complete_data_average, Subject)
 ##
 ## Write the output using the write.table() function
 ##

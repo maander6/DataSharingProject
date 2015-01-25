@@ -22,7 +22,7 @@ activities (Walking, walking upstairs, walking downstairs, sitting, standing,
 and laying).  The accelerometer and gyroscope in the phone captured data for the
 3-axial linear acceleration and 3-axial angular velocity.  From this data, 
 information about body motion and subject exertion with the different activities
-can be extracted.  The purpose of this exercise is to take the data and put it 
+were be extracted.  The purpose of this exercise is to take the data and put it 
 in a form that can be more easily read and, ultimately, analyzed.  This is 
 accomplished by creating a single tidy dataset.  Details about the input files,
 the intermediate data tables, and the output tidy data table will be provided
@@ -60,7 +60,10 @@ read.table("Samsung_data_tidy.txt", header=TRUE)
 
 #Original Source of the Data
 
-Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
+Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-
+Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-
+Friendly Support Vector Machine. International Workshop of Ambient Assisted 
+Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
 
 #Useful References
 

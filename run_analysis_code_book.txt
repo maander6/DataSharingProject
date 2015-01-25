@@ -39,7 +39,9 @@ The input data is read into data tables with the following names
 
 features:
 
-This is a table of 561 observation types and 2 variables. From the features_info.txt file included with the data.  The data is a collection of output from the accelerometer (ACC) and gyroscope (Gyro) features of a Samsung Galaxy II smart phone.  From this data, other variables are calculated from the linear acceleration and angular velocity.  The leading "t" indicates the data is collected in the time domain.  The leading "f" indicates that the data has been subjected to a Fast Fourier Transform, and mathematical operation that transforms data from the time domain to the frequency domain.
+This is a table of 561 observation types and 2 variables. Information about the features can be found in the features_info.txt file included with the data.  The data is a collection of output from the accelerometer (ACC) and gyroscope (Gyro) features of a Samsung Galaxy II smart phone.  From this data, other variables are calculated from the linear acceleration and angular velocity.  The leading "t" indicates the data is collected in the time domain.  The leading "f" indicates that the data has been subjected to a Fast Fourier Transform, and mathematical operation that transforms data from the time domain to the frequency domain.
+
+Based on this, only the data tBodyAcc-X, tBodyAcc-Y, tBodyAcc-Z, tBodyGyro-X, tBodyGyro-Y, and tbodyGyro-Z are the raw data collected.  All other variable types are derived from these data.  The README.txt and the features_info.txt included with the data provide a general description of how this data is transformed into the other variables; however, the algorithmic details are not provided.  Contained in the Inertial Signals subdirectory to the test and train subdirectories, the raw body_acc and body_gyro data is provided.  Again, the files included with the data do not include the algorithmic details that allow reproduction of the calculated data that is part of the X_train and X_test data.  For this reason, it was decided that the Tidy data set that is produced by the Script would include all of the different variables listed in the features table (focused on those with "mean" or "std" in the descriptive name.
 
 Variables with "Acc" in the name have standard gravity units (g).  Variables with "Gyro" have units radians/second.
 
@@ -61,7 +63,7 @@ fBodyAccJerkMag
 fBodyGyroMag
 fBodyGyroJerkMag
 
-the data labeled "*BodyACC*" and "*BodyGyro*" is the raw data from the accelerometer and the gyroscope.  The other data is derived from these quantities.  For each of the above variables, the following quantities were determined and included in the input dataset
+The data labeled "*BodyACC*" and "*BodyGyro*" is the raw data from the accelerometer and the gyroscope.  The other data is derived from these quantities.  For each of the above variables, the following quantities were determined and included in the input dataset
 
 mean(): Mean value
 std(): Standard deviation
@@ -120,11 +122,11 @@ This is a dataset of 2947 observations of 1 variable.  The 2947 observations cor
 
 subject_train:
 
-This is a dataset of 7352 observations of 1 variable.  The 7352 observations correspond to the subject who was participating in the activity that lead to the observations in the rows of the X_train table.
+This is a dataset of 7352 observations of 1 variable.  The 7352 observations correspond to the subject who was participating in the activity that lead to the observations in the rows of the X_train table. For the training data set, there were 21 different subjects choosen randomly from a group of 30 total sujects.
 
 subject_test:
 
-This is a dataset of 2947 observations of 1 variable.  The 2947 observations correspond to the suject who was participating in the activity that lead to the observations in the rows of the X_test table.
+This is a dataset of 2947 observations of 1 variable.  The 2947 observations correspond to the suject who was participating in the activity that lead to the observations in the rows of the X_test table.  For the test data set, there were 9 different subjects choosen randomly from a group of 30 total subjects.
 
 Input Summary:
 
@@ -132,7 +134,7 @@ Based on the size of the input files, the script is able to align the activity t
 
 Script operation summary:
 
-The run_analysis.R script reads the data into data tables.  The script first adds a header to the X_test and X_train data tables to provide a unique name to each variable.  The column names are from the features data table.  It then adds a column to the X_test and X_train data tables that corresponds to the activity labels (from y-test and y_train respectively) to identify the type of activity the subject was performing while a particular observation was made.  Similarly, another column (from subject_test and subject_train, respectively) is added that adds the subject labels to the X_test and X_train data table to identify the subject who performed the activity while the observation was being made. 
+The run_analysis.R script reads the data into data tables.  The script first adds a header to the X_test and X_train data tables to provide a unique descriptive name to each variable.  The column names are from the features data table.  It then adds a column to the X_test and X_train data tables that corresponds to the activity labels (from y-test and y_train respectively) to identify the type of activity the subject was performing while a particular observation was made.  Similarly, another column (from subject_test and subject_train, respectively) is added that adds the subject labels to the X_test and X_train data table to identify the subject who performed the activity while the observation was being made. 
 
 The X_test and X_train data tables are then combined using the rbind() function to create a single data table (complete_data) of all the observations of all the variables.
 
@@ -226,5 +228,11 @@ The output file, Samsung_data_tidy.txt is the output file that is written to dis
 "80" "fBodyBodyGyroMagstd"
 "81" "fBodyBodyGyroJerkMagstd"
 
-Those variables with Acc in the name have units of standard gravity (g), and those with Gyro in the name have units of radians/second.  
+Those variables with Acc in the name have units of standard gravity (g), and those with Gyro in the name have units of radians/secon; however, the values have been normalized so that they range from -1 to 1.  Normalizing the data removes the units.  The output file, Samsung_data_tidy.txt meets the criteria for a tidy data set.  Each row (observation) corresponds to a unique subject/activity combination.  Each column (variable) is for a unique variable of the data set.
+
+Summary and Explaination of Choices made in teh project:
+
+One could make the arguement that all of the variables except Subject, Activity, tBodyAccmeanX, tBodyAccmeanY, tBodyAccmeanZ, tBodyGyromeanX, tBodyGyromeanY, and tBodymeanZ are calculated from these variables are should not be included in the tidy data set.  However, I do not agree with that interpretation. First, all of frequency based variables were calculated by a Fast Fourier Transform of time based data.  To do this calculation, we would need the accelerometer and gryosope data as a function of time with a clear interval for sampling the data.  The features_info.txt file included with the data says that the data were captured at a constant rate of 50Hz.  Based on this, one could use the data in the Inertial Signals directory to establish the time relationship for the Accelerometer and Gyroscope data, and use that to calculate the frequency domain variables (fBodyAcc and fBodyGyro).  The README txt also states that the data is normalized so that it falls between 1 and -1.  Normalizing the data in teh X_text and X_train data sets removes the absolute magnitude of the data, and makes it impossible to take that data and reliably transform it into another variable.  For many of the other variables in the final tidy data set, the details of the calculation that the originators of the data set used were not provided.  In the absence of these details, the values in the input data set could not be reproduced.  One of the concepts behind creating a script to manipulate data into a tidy data set is reproducibility.
+
+For these reasons, I chose to keep all of the variables (with "mean" or "std" in the descriptive name) in the final tidy data set.
 
