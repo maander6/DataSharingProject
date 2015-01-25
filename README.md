@@ -1,4 +1,4 @@
-## DataSharingProject
+## Data Cleaning and Sharing Project
 repo to contain the project script, the code-book, and a readme.md file
 #run_analysis.R Script
 =====
@@ -57,6 +57,16 @@ The output text file (Samsung_data_tidy.txt) should be read back into the R
 working environment using the following command:
 
 read.table("Samsung_data_tidy.txt", header=TRUE)
+
+### Code Book
+
+Two versions of the code book for the run_analysis script have been uploaded
+to Github.com.  One is a text file that does not render well on Github 
+because it is displayed without wordwrapping.  A pdf version is also up-
+loaded.  This form is much easier to read, and it is suggested that you use 
+this version.  After clicking on the pdf version of the code book, you need
+to click "view raw" to download the pdf file of the code book.
+
 
 #Original Source of the Data
 
